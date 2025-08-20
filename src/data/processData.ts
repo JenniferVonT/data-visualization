@@ -4,9 +4,10 @@
  * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
 
-import { GenderCount, MoviesPerYear } from '../hooks/useMovieStats.ts'
+import { GenderCount, MoviesPerYear, Actor } from '../hooks/useMovieStats.ts'
+import { groupBy, sumBy } from 'lodash'
 
-// TO-DO: Implement to calculate based on genre aswell.
+// TO-DO: Implement a process to do the same but based on genre of the movies.
 export function computeMoviesPerYear(movies: any[], selectedGenre: string): MoviesPerYear {
   const filteredMovies = selectedGenre.toLowerCase() === 'all'
     ? movies
@@ -20,14 +21,32 @@ export function computeMoviesPerYear(movies: any[], selectedGenre: string): Movi
   }, {} as MoviesPerYear)
 }
 
-// TO-DO: Update process to calculate the gender based on the roles and movies, not just the actors.
+
+/**
+ * Process the data to get the gender diversity in movies.
+ *
+ * @param actors - actor data.
+ * @param movies - movie data.
+ * @returns {GenderCount} - Returns the total
+ */
 // TO-DO: Implement a process to do the same but based on genre of the movies.
-export function computeGenderCounts(actors: any[]): GenderCount {
-  const counts: GenderCount = { male: 0, female: 0, unknown: 0 }
-  actors.forEach((actor) => {
-    if (actor.gender === 2) counts.male += 1
-    else if (actor.gender === 1) counts.female += 1
-    else counts.unknown += 1
+export function computeGenderCountsByMovie(actors: Actor[], movies: { id: number }[]) {
+  const counts = { male: 0, female: 0, unknown: 0 }
+
+  // group roles by movie_id
+  const rolesByMovie = groupBy(
+    actors.flatMap(actor =>
+      actor.roles.map(role => ({ ...role, gender: actor.gender }))
+    ),
+    'movie_id'
+  )
+
+  movies.forEach(movie => {
+    const roles = rolesByMovie[movie.id] || []
+    counts.male += roles.filter(r => r.gender === 1).length
+    counts.female += roles.filter(r => r.gender === 2).length
+    counts.unknown += roles.filter(r => ![1, 2].includes(r.gender)).length
   })
+
   return counts
 }
