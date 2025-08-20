@@ -62,14 +62,34 @@ export async function fetchGenres () {
   return data.genres
 }
 
-export async function fetchActors(page = 1, limit = 100) {
-  const { data } = await client.mutate({
-    mutation: GET_ACTORS,
-    variables: { page, limit },
-    fetchPolicy: "no-cache"
-  })
+export async function fetchActors() {
+  let allActors: any[] = []
+  let page = 1
+  const limit = 1000
+  let hasMore = true
 
-  return data.actors.actors
+    while (hasMore) {
+      const { data } = await client.mutate({
+        mutation: GET_ACTORS,
+        variables: { page, limit },
+        fetchPolicy: "no-cache"
+      })
+    
+
+    const actors = data.actors.actors;
+    const total = data.actors.total;
+
+    allActors = [...allActors, ...actors]
+
+    // stop if we’ve fetched everything
+    if (allActors.length >= total) {
+      hasMore = false
+    } else {
+      page++
+    }
+  }
+
+  return allActors
 }
 
 /**
