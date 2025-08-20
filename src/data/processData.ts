@@ -6,6 +6,7 @@
 
 import { GenderCount, MoviesPerYear } from '../hooks/useMovieStats.ts'
 
+// TO-DO: Implement to calculate based on genre aswell.
 export function computeMoviesPerYear(movies: any[], selectedGenre: string): MoviesPerYear {
   const filteredMovies = selectedGenre.toLowerCase() === 'all'
     ? movies
@@ -19,6 +20,8 @@ export function computeMoviesPerYear(movies: any[], selectedGenre: string): Movi
   }, {} as MoviesPerYear)
 }
 
+// TO-DO: Update process to calculate the gender based on the roles and movies, not just the actors.
+// TO-DO: Implement a process to do the same but based on genre of the movies.
 export function computeGenderCounts(actors: any[]): GenderCount {
   const counts: GenderCount = { male: 0, female: 0, unknown: 0 }
   actors.forEach((actor) => {

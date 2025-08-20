@@ -49,6 +49,12 @@ const GET_ACTORS = gql`
         id
         name
         gender
+        profile_path
+        roles {
+          character
+          movie_id
+          movie_title
+        }
       }
       total
     }
@@ -65,7 +71,7 @@ export async function fetchGenres () {
 export async function fetchActors() {
   let allActors: any[] = []
   let page = 1
-  const limit = 1000
+  const limit = 10000
   let hasMore = true
 
     while (hasMore) {
@@ -100,7 +106,7 @@ export async function fetchActors() {
 export async function fetchMovies () {
   let allMovies: any[] = []
   let page = 1
-  const limit = 1000
+  const limit = 10000
   let hasMore = true
 
   while (hasMore) {
