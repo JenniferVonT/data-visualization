@@ -22,7 +22,7 @@ export function computeMoviesPerYear(movies: any[], selectedGenre: string): Movi
 export function computeGenderCounts(actors: any[]): GenderCount {
   const counts: GenderCount = { male: 0, female: 0, unknown: 0 }
   actors.forEach((actor) => {
-    if (actor.gender === 0) counts.male += 1
+    if (actor.gender === 2) counts.male += 1
     else if (actor.gender === 1) counts.female += 1
     else counts.unknown += 1
   })

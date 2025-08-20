@@ -27,7 +27,7 @@ const GET_GENRES = gql`
 
 // Fetch paginated movies.
 const GET_MOVIES = gql`
-  query GetMovies($page: Int, $limit: Int) {
+  mutation GetMovies($page: Int, $limit: Int) {
     movies(page: $page, limit: $limit) {
       movies {
         id
@@ -43,7 +43,7 @@ const GET_MOVIES = gql`
 
 // Fetch paginated actors.
 const GET_ACTORS = gql`
-  query GetActors($page: Int, $limit: Int) {
+  mutation GetActors($page: Int, $limit: Int) {
     actors(page: $page, limit: $limit) {
       actors {
         id
@@ -58,21 +58,28 @@ const GET_ACTORS = gql`
 // Fetch functions
 export async function fetchGenres() {
   const { data } = await client.query({ query: GET_GENRES })
+
   return data.genres
 }
 
 export async function fetchMovies(page = 1, limit = 100) {
-  const { data } = await client.query({
-    query: GET_MOVIES,
+  const { data } = await client.mutate({
+    mutation: GET_MOVIES,
     variables: { page, limit },
   })
+
+  console.log('movie data: ', data.movies.movies)
+
   return data.movies.movies
 }
 
 export async function fetchActors(page = 1, limit = 100) {
-  const { data } = await client.query({
-    query: GET_ACTORS,
+  const { data } = await client.mutate({
+    mutation: GET_ACTORS,
     variables: { page, limit },
   })
+
+  console.log('actor data: ', data.actors.actors)
+
   return data.actors.actors
 }
