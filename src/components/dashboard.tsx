@@ -1,28 +1,24 @@
-import React, { useState } from 'react'
+/**
+ * @file This module contains the dashboard component.
+ * @module dashboard
+ * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
+ */
+
+import React from 'react' // Have to be imported even if it isn't used.
 import { useMovieStats } from '../hooks/useMovieStats.ts'
+import { GenderChart } from './genderChart.tsx'
+import { YearChart } from './yearChart.tsx'
+
 
 export default function Dashboard() {
-  const [genre, setGenre] = useState("all")
-  const { stats, loading } = useMovieStats(genre)
+  const { stats, loading } = useMovieStats()
 
   if (loading) return <p>Loading...</p>
 
   return (
     <div>
-      <select onChange={(e) => setGenre(e.target.value)} value={genre}>
-        <option value="all">All</option>
-        {stats.genres.map((g) => (
-          <option key={g} value={g}>
-            {g}
-          </option>
-        ))}
-      </select>
-
-      <h2>Gender Distribution</h2>
-      <pre>{JSON.stringify(stats.genderCounts, null, 2)}</pre>
-
-      <h2>Movies Per Year</h2>
-      <pre>{JSON.stringify(stats.moviesPerYear, null, 2)}</pre>
+      <GenderChart genderCounts={stats.genderCounts} genres={stats.genres} />
+      <YearChart moviesPerYear={stats.moviesPerYear} genres={stats.genres} />
     </div>
   )
 }

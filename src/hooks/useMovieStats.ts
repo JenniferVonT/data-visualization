@@ -13,7 +13,7 @@ export type MoviesPerYear = { [year: number]: number }
 export interface MovieStats { genderCounts: GenderCount; moviesPerYear: MoviesPerYear; genres: string[] }
 
 export function useMovieStats(selectedGenre: string = 'all') {
-  const [stats, setStats] = useState<MovieStats>({
+/*  const [stats, setStats] = useState<MovieStats>({
     genderCounts: { male: 0, female: 0, unknown: 0 },
     moviesPerYear: {},
     genres: [],
@@ -44,6 +44,27 @@ export function useMovieStats(selectedGenre: string = 'all') {
 
     fetchData()
   }, [selectedGenre])
+  */
+
+  const stats = {
+    moviesPerYear: {
+      1954: 345,
+      1980: 2500,
+      2005: 10000
+    },
+    genres: [
+     'fantasy',
+     'comedy',
+     'horror'
+    ],
+    genderCounts: {
+      female: 25000,
+      male: 35000,
+      unknown: 13050
+    }
+  }
+
+  const loading = false
 
   return { stats, loading }
 }
