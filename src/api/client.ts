@@ -29,14 +29,14 @@ const GET_GENRES = gql`
 const GET_MOVIES = gql`
   mutation GetMovies($page: Int, $limit: Int) {
     movies(page: $page, limit: $limit) {
+      total
       movies {
         id
         title
-        genre
-        release_year
+        genres
         poster_path
+        release_year
       }
-      total    
     }
   }
 `
@@ -56,30 +56,55 @@ const GET_ACTORS = gql`
 `
 
 // Fetch functions
-export async function fetchGenres() {
+export async function fetchGenres () {
   const { data } = await client.query({ query: GET_GENRES })
 
   return data.genres
-}
-
-export async function fetchMovies(page = 1, limit = 100) {
-  const { data } = await client.mutate({
-    mutation: GET_MOVIES,
-    variables: { page, limit },
-  })
-
-  console.log('movie data: ', data.movies.movies)
-
-  return data.movies.movies
 }
 
 export async function fetchActors(page = 1, limit = 100) {
   const { data } = await client.mutate({
     mutation: GET_ACTORS,
     variables: { page, limit },
+    fetchPolicy: "no-cache"
   })
-
-  console.log('actor data: ', data.actors.actors)
 
   return data.actors.actors
 }
+
+/**
+ * Function that paginates so it can fetch all results.
+ *
+ * @returns 
+ */
+export async function fetchMovies () {
+  let allMovies: any[] = []
+  let page = 1
+  const limit = 1000
+  let hasMore = true
+
+  while (hasMore) {
+    const { data } = await client.mutate({
+      mutation: GET_MOVIES,
+      variables: { page, limit },
+      fetchPolicy: "no-cache", // avoid Apollo caching issues
+    })
+
+    const movies = data.movies.movies;
+    const total = data.movies.total;
+
+    allMovies = [...allMovies, ...movies]
+
+    // stop if we’ve fetched everything
+    if (allMovies.length >= total) {
+      hasMore = false
+    } else {
+      page++
+    }
+  }
+
+  return allMovies
+}
+
+
+

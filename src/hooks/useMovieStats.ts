@@ -26,8 +26,8 @@ export function useMovieStats(selectedGenre: string = 'all') {
 
       try {
         const [movies, actors, genres] = await Promise.all([
-          fetchMovies(1, 1000),
-          fetchActors(1, 1000),
+          fetchMovies(),
+          fetchActors(),
           fetchGenres(),
         ])
 
