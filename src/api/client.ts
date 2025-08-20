@@ -8,20 +8,25 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 
 const GRAPHQL_ENDPOINT = 'https://jen-movie-api-1239f1b4c492.herokuapp.com/graphql'
 
-export const client = new ApolloClient({
+// Initialize the client that points to the backend.
+const client = new ApolloClient({
     uri: GRAPHQL_ENDPOINT,
     cache: new InMemoryCache()
 })
 
+/**
+ * Define all the queries that we will need.
+ */
+
 // Fetch all genres
-export const GET_GENRES = gql`
+const GET_GENRES = gql`
   query GetGenres {
     genres
   }
 `
 
 // Fetch paginated movies.
-export const GET_MOVIES = gql`
+const GET_MOVIES = gql`
   query GetMovies($page: Int, $limit: Int) {
     movies(page: $page, limit: $limit) {
       movies {
@@ -37,7 +42,7 @@ export const GET_MOVIES = gql`
 `
 
 // Fetch paginated actors.
-export const GET_ACTORS = gql`
+const GET_ACTORS = gql`
   query GetActors($page: Int, $limit: Int) {
     actors(page: $page, limit: $limit) {
       actors {
@@ -49,3 +54,25 @@ export const GET_ACTORS = gql`
     }
   }
 `
+
+// Fetch functions
+export async function fetchGenres() {
+  const { data } = await client.query({ query: GET_GENRES })
+  return data.genres
+}
+
+export async function fetchMovies(page = 1, limit = 100) {
+  const { data } = await client.query({
+    query: GET_MOVIES,
+    variables: { page, limit },
+  })
+  return data.movies.movies
+}
+
+export async function fetchActors(page = 1, limit = 100) {
+  const { data } = await client.query({
+    query: GET_ACTORS,
+    variables: { page, limit },
+  })
+  return data.actors.actors
+}
