@@ -10,6 +10,7 @@ import { useMoviesPerYearStats } from '../hooks/useMoviesPerYearStats.ts'
 import { useGenderStats } from '../hooks/useGenderStats.ts'
 import { GenderChart } from './genderChart.tsx'
 import { YearChart } from './yearChart.tsx'
+import { DropDownGenre } from './dropDownGenre.tsx'
 
 
 /**
@@ -25,16 +26,20 @@ export default function Dashboard() {
   if (loading) return <p>Loading...</p> // TO-DO: Update to show a moving loading bar or buffer circle.
 
   const moviesPerYear = useMoviesPerYearStats(data.movies, yearGenre)
-  const genderCounts = useGenderStats(data.actors, data.movies, genderGenre)
+  const genderCounts =  useGenderStats(data.actors, data.movies, genderGenre)
+
 
   return (
     <div>
-      <GenderChart
-        genderCounts={genderCounts}
-        genres={data.genres}
-        selectedGenre={genderGenre}
-        onChange={setGenderGenre}
-      />
+      <div id="genderChart">
+        <DropDownGenre
+          genres={data.genres}
+          selectedGenre={genderGenre}
+          onChange={setGenderGenre}
+        />
+        <GenderChart genderCounts={genderCounts} />
+      </div>
+
       <YearChart
         moviesPerYear={moviesPerYear}
         genres={data.genres}

@@ -6,7 +6,7 @@
 
 import { GenderCount, MoviesPerYear } from '../hooks/useMovieStats.ts'
 import { Movie, Actor } from '../api/client.ts'
-import { groupBy, sumBy } from 'lodash'
+import { groupBy } from 'lodash'
 
 
 export function computeMoviesPerYear(movies: any[], selectedGenre: string): MoviesPerYear {
@@ -38,7 +38,7 @@ export function computeMoviesPerYear(movies: any[], selectedGenre: string): Movi
  * @returns {GenderCount} - Returns the total
  */
 export function computeGenderCountsByMovie(actors: Actor[], movies: Movie[], selectedGenre: String = 'all'): GenderCount {
-  const counts: GenderCount = { male: 0, female: 0, unknown: 0 }
+  const counts = { male: 0, female: 0, unknown: 0 }
 
   // Filter movies by genre.
   const filteredMovies = selectedGenre.toLowerCase() === 'all'
@@ -61,5 +61,10 @@ export function computeGenderCountsByMovie(actors: Actor[], movies: Movie[], sel
     counts.unknown += roles.filter(r => ![1, 2].includes(r.gender)).length
   })
 
-  return counts
+
+  return [
+    { name: 'Male', value: counts.male },
+    { name: 'Female', value: counts.female },
+    { name: 'Unknown', value: counts.unknown }
+  ]
 }

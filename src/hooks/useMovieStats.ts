@@ -7,7 +7,12 @@
 import { useEffect, useState } from 'react'
 import { fetchMovies, fetchActors, fetchGenres, Movie, Actor } from '../api/client.ts'
 
-export type GenderCount = { male: number; female: number; unknown: number }
+export type GenderCount = [
+      { name: string, value: number },
+      { name: string, value: number },
+      { name: string, value: number }
+    ]
+
 export type MoviesPerYear = { [year: number]: number }
 
 
