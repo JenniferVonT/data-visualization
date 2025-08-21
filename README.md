@@ -1,6 +1,6 @@
 # Project Title
 
-Replace this with the name of your project. It should be a brief and catchy title that accurately represents your application.
+Movie visualizer!
 
 ## Project Description
 
