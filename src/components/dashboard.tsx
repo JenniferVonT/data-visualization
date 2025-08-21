@@ -11,6 +11,7 @@ import { useGenderStats } from '../hooks/useGenderStats.ts'
 import { GenderChart } from './genderChart.tsx'
 import { YearChart } from './yearChart.tsx'
 import { DropDownGenre } from './dropDownGenre.tsx'
+import { LoadingIcon } from './loadingIcon.tsx'
 
 
 /**
@@ -23,7 +24,7 @@ export default function Dashboard() {
   const [yearGenre, setYearGenre] = useState("all")
   const [genderGenre, setGenderGenre] = useState("all")
 
-  if (loading) return <p>Loading...</p> // TO-DO: Update to show a moving loading bar or buffer circle.
+  if (loading) return <LoadingIcon />
 
   const moviesPerYear = useMoviesPerYearStats(data.movies, yearGenre)
   const genderCounts =  useGenderStats(data.actors, data.movies, genderGenre)
