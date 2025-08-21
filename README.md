@@ -40,13 +40,16 @@ For deployment platform I went with heroku.
 Using the application is easy. It is a single page application so the user only has to enter the site url and wait for the data to load (takes about 30-40seconds because I decided to use a huge dataset and make some of the data processes in the frontend instead of the backend to keep them a bit decoupled and the backend as general as possible to be able to be used by multiple different frontends).
 
 When entering the site you will be greeted by a loading screen like this:
+
 ![loading screen](./readme-resources/LoadingScreenVid.gif)
 
 
 After the data has finished loading (which only happens at site launch). The charts will be visible. The first chart you will see is the gender diversity chart, it has a simple intuitive design so you can easily change the filter by genre like this:
+
 ![gender diversity](./readme-resources/GenderDiversityVid.gif)
 
 Under that chart you will see the released movies per year chart. It has the same intuitive design as the first chart and also filters by genre, it's easy to navigate like this:
+
 ![gender diversity](./readme-resources/MoviePerYearVid.gif)
 
 ## Link to the Deployed Application
