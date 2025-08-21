@@ -4,7 +4,7 @@
  * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
 
-import React, { useState } from 'react' // Have to be imported even if it isn't used directly.
+import React, { useState } from 'react'
 import { useMovieData } from '../hooks/useMovieStats.ts'
 import { useMoviesPerYearStats } from '../hooks/useMoviesPerYearStats.ts'
 import { useGenderStats } from '../hooks/useGenderStats.ts'
@@ -40,12 +40,14 @@ export default function Dashboard() {
         <GenderChart genderCounts={genderCounts} />
       </div>
 
-      <YearChart
-        moviesPerYear={moviesPerYear}
-        genres={data.genres}
-        selectedGenre={yearGenre}
-        onChange={setYearGenre}
-      />
+      <div id="yearChart">
+        <DropDownGenre
+          genres={data.genres}
+          selectedGenre={yearGenre}
+          onChange={setYearGenre}
+        />
+        <YearChart moviesPerYear={moviesPerYear} />
+      </div>
     </div>
   )
 }
