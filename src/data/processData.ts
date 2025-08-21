@@ -9,14 +9,23 @@ import { Movie, Actor } from '../api/client.ts'
 import { groupBy } from 'lodash'
 
 
+/**
+ * 
+ * @param movies - All movie data.
+ * @param selectedGenre - The current genre to calculate.
+ * @returns {MoviesPerYear} - A processed data object with year and amount per year.
+ */
 export function computeMoviesPerYear(movies: any[], selectedGenre: string): MoviesPerYear {
+  // Filter out all movies that doesn't use the selected genre ("all" uses all the movies).
   const filteredMovies = selectedGenre.toLowerCase() === 'all'
     ? movies
     : movies.filter((movie) => movie.genres?.map(genre => genre.toLowerCase()).includes(selectedGenre.toLowerCase()))
 
+    // Count each movie per year and return the result.
     const processedData = filteredMovies.reduce((acc, movie) => {
       const year = movie.release_year
 
+      // If the movie does not have a release year, move on to the next without counting it.
       if (!year) {
         return acc
       }
@@ -33,9 +42,10 @@ export function computeMoviesPerYear(movies: any[], selectedGenre: string): Movi
 /**
  * Process the data to get the gender diversity in movies.
  *
- * @param actors - actor data.
- * @param movies - movie data.
- * @returns {GenderCount} - Returns the total
+ * @param actors - Actor data.
+ * @param movies - Movie data.
+ * @param selectedGenre - The current genre.
+ * @returns {GenderCount} - Returns the total gender count for the current genre.
  */
 export function computeGenderCountsByMovie(actors: Actor[], movies: Movie[], selectedGenre: String = 'all'): GenderCount {
   const counts = { male: 0, female: 0, unknown: 0 }
@@ -54,6 +64,7 @@ export function computeGenderCountsByMovie(actors: Actor[], movies: Movie[], sel
     'movie_id'
   )
 
+  // Count all the roles for each movie and their gender.
   filteredMovies.forEach(movie => {
     const roles = rolesByMovie[movie.id] || []
     counts.male += roles.filter(r => r.gender === 1).length

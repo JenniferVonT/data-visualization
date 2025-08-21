@@ -4,8 +4,13 @@
  * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
 
-import React from 'react'
+import React from 'react' // OBS! Needs to be imported.
 
+/**
+ * Creates a loading icon element/component.
+ *
+ * @returns - A finished loading icon element/component.
+ */
 export function LoadingIcon () {
 
   return (
@@ -17,7 +22,7 @@ export function LoadingIcon () {
       height: '100vh'
     }}>
       <img 
-        src= '../public/loadingGif.svg'
+        src= '../loadingGif.svg' // Use a pre-made loading gif for the easiest application.
         alt="Loading..." 
         style={{ width: 80, height: 80 }}
       />

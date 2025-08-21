@@ -12,8 +12,9 @@ import { Movie } from '../api/client.ts'
  *
  * @param movies - All movie data.
  * @param selectedGenre - The current genre.
- * @returns 
+ * @returns  - The processed data.
  */
 export function useMoviesPerYearStats(movies: Movie[], selectedGenre: string) {
+  // Call the data processor function.
   return computeMoviesPerYear(movies, selectedGenre)
 }

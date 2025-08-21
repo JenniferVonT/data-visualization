@@ -13,8 +13,9 @@ import { Actor, Movie } from '../api/client.ts'
  * @param actors - All actor data.
  * @param movies - All movie data.
  * @param selectedGenre - Current genre.
- * @returns 
+ * @returns - The processed data.
  */
 export function useGenderStats(actors: Actor[], movies: Movie[], selectedGenre: string) {
+  // Call the data processor function.
   return computeGenderCountsByMovie(actors, movies, selectedGenre)
 }

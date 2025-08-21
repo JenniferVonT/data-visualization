@@ -4,13 +4,19 @@
  * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
 
-import React from 'react'
+import React from 'react' // OBS! Needs to be imported.
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts'
 
 interface YearChartProps {
   moviesPerYear: { [year: number]: number }
 }
 
+/**
+ * Build the chart to show movies released per year.
+ *
+ * @param {YearChartProps} moviesPerYear - All the processed movie data needed.
+ * @returns - A finished year chart element/component
+ */
 export function YearChart({ moviesPerYear }: YearChartProps) {
   // Convert object to array and sort by year
   const data = Object.entries(moviesPerYear)

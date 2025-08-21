@@ -4,7 +4,7 @@
  * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
 
-import React, { useState } from 'react'
+import React, { useState } from 'react' // OBS! Needs to be imported.
 import { useMovieData } from '../hooks/useMovieStats.ts'
 import { useMoviesPerYearStats } from '../hooks/useMoviesPerYearStats.ts'
 import { useGenderStats } from '../hooks/useGenderStats.ts'
@@ -20,16 +20,19 @@ import { LoadingIcon } from './loadingIcon.tsx'
  * @returns The dashboard component.
  */
 export default function Dashboard() {
+  // Get all relevant data for the charts to work.
   const { data, loading } = useMovieData()
   const [yearGenre, setYearGenre] = useState("all")
   const [genderGenre, setGenderGenre] = useState("all")
 
+  // If the data isn't done fetching and processing show a loading icon instead.
   if (loading) return <LoadingIcon />
 
   const moviesPerYear = useMoviesPerYearStats(data.movies, yearGenre)
   const genderCounts =  useGenderStats(data.actors, data.movies, genderGenre)
 
 
+  // Return a div component with all the charts and titles.
   return (
     <div>
       <div id="genderChart">

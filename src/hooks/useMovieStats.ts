@@ -7,6 +7,9 @@
 import { useEffect, useState } from 'react'
 import { fetchMovies, fetchActors, fetchGenres, Movie, Actor } from '../api/client.ts'
 
+/**
+ * Set the unique data types.
+ */
 export type GenderCount = [
       { name: string, value: number },
       { name: string, value: number },
@@ -16,29 +19,21 @@ export type GenderCount = [
 export type MoviesPerYear = { [year: number]: number }
 
 
-
-export interface MovieStats {
-  genderCounts: GenderCount
-  moviesPerYear: MoviesPerYear
-  genres: string[]
-  movies: Movie[]
-  actors: Actor[]
-}
-
 /**
  * Fetch all data once on launch/mount.
  *
- * @returns Either a loading prompt or the fetched data.
+ * @returns - Loading prompt and/or the fetched data.
  */
-export function useMovieData() {
+export function useMovieData () {
   const [data, setData] = useState<{ movies: Movie[], actors: Actor[], genres: string[] }>({ movies: [], actors: [], genres: [] })
   const [loading, setLoading] = useState(true)
 
+  // Called on launch/mount to fetch all the data.
   useEffect(() => {
     async function fetchData() {
       setLoading(true)
 
-      // Fetch all the data from the backend.
+      // Call the API client.
       try {
         const [movies, actors, genres] = await Promise.all([
           fetchMovies(),
@@ -50,8 +45,10 @@ export function useMovieData() {
         console.error(err)
       }
 
+      // If the data is finished loading set the loading prompt to false.
       setLoading(false)
     }
+    // Call the function once.
     fetchData()
   }, [])
 
