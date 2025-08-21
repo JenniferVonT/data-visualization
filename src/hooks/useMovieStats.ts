@@ -6,7 +6,6 @@
 
 import { useEffect, useState } from 'react'
 import { fetchMovies, fetchActors, fetchGenres } from '../api/client.ts'
-import { computeMoviesPerYear, computeGenderCountsByMovie } from '../data/processData.ts'
 
 export type GenderCount = { male: number; female: number; unknown: number }
 export type MoviesPerYear = { [year: number]: number }
@@ -34,29 +33,20 @@ export interface MovieStats {
   actors: Actor[]
 }
 
-export function useMovieStats(selectedGenre: string = 'all') {
-  // State for raw fetched data
-  const [data, setData] = useState<{ movies: Movie[]; actors: Actor[]; genres: string[] }>({
-    movies: [],
-    actors: [],
-    genres: [],
-  })
-
-  // State for computed stats for charts
-  const [stats, setStats] = useState<MovieStats>({
-    genderCounts: { male: 0, female: 0, unknown: 0 },
-    moviesPerYear: {},
-    genres: [],
-    movies: [],
-    actors: [],
-  })
-
+/**
+ * Fetch all data once on launch/mount.
+ *
+ * @returns Either a loading prompt or the fetched data.
+ */
+export function useMovieData() {
+  const [data, setData] = useState<{ movies: Movie[], actors: Actor[], genres: string[] }>({ movies: [], actors: [], genres: [] })
   const [loading, setLoading] = useState(true)
 
-  // Fetch data once on mount
   useEffect(() => {
     async function fetchData() {
       setLoading(true)
+
+      // Fetch all the data from the backend.
       try {
         const [movies, actors, genres] = await Promise.all([
           fetchMovies(),
@@ -64,30 +54,14 @@ export function useMovieStats(selectedGenre: string = 'all') {
           fetchGenres(),
         ])
         setData({ movies, actors, genres })
-
-        // Compute initial stats using the default selectedGenre
-        setStats({
-          moviesPerYear: computeMoviesPerYear(movies, selectedGenre),
-          genderCounts: computeGenderCountsByMovie(actors, movies),
-          movies,
-          actors,
-          genres,
-        })
       } catch (err) {
-        console.error('Error fetching or processing data', err)
+        console.error(err)
       }
+
       setLoading(false)
     }
     fetchData()
   }, [])
 
-  // Recompute stats when selectedGenre changes
-  useEffect(() => {
-    setStats((prev) => ({
-      ...prev,
-      moviesPerYear: computeMoviesPerYear(data.movies, selectedGenre),
-    }))
-  }, [selectedGenre, data.movies])
-
-  return { stats, loading }
+  return { data, loading }
 }

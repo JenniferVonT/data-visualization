@@ -11,18 +11,18 @@ import { DropDownGenre } from "./dropDownGenre.tsx"
 interface YearChartProps {
   moviesPerYear: MoviesPerYear
   genres: string[]
+  selectedGenre: string
+  onChange: (genre: string) => void
 }
 
-export function YearChart({ moviesPerYear, genres }: YearChartProps) {
-  const [selectedGenre, setSelectedGenre] = useState("all")
-
+export function YearChart({ moviesPerYear, genres, selectedGenre, onChange }: YearChartProps) {
   return (
     <div>
       <h2>Movies Per Year</h2>
       <DropDownGenre
         genres={genres}
         selectedGenre={selectedGenre}
-        onChange={setSelectedGenre}
+        onChange={onChange}
       />
       <pre>{JSON.stringify(moviesPerYear, null, 2)}</pre>
     </div>
