@@ -5,7 +5,7 @@
  */
 
 import { computeGenderCountsByMovie } from '../data/processData.ts'
-import { Actor, Movie } from './useMovieStats.ts'
+import { Actor, Movie } from '../api/client.ts'
 
 /**
  * Process the data to calculate movies released per year.

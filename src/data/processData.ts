@@ -4,7 +4,8 @@
  * @author Jennifer von Trotta-Treyden <jv222th@student.lnu.se>
  */
 
-import { GenderCount, MoviesPerYear, Actor, Movie } from '../hooks/useMovieStats.ts'
+import { GenderCount, MoviesPerYear } from '../hooks/useMovieStats.ts'
+import { Movie, Actor } from '../api/client.ts'
 import { groupBy, sumBy } from 'lodash'
 
 

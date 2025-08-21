@@ -5,25 +5,12 @@
  */
 
 import { useEffect, useState } from 'react'
-import { fetchMovies, fetchActors, fetchGenres } from '../api/client.ts'
+import { fetchMovies, fetchActors, fetchGenres, Movie, Actor } from '../api/client.ts'
 
 export type GenderCount = { male: number; female: number; unknown: number }
 export type MoviesPerYear = { [year: number]: number }
 
-export type Movie = {
-  id: number
-  title: string
-  genres: string[]
-  poster_path: string
-  release_year: number
-}
 
-export type Actor = {
-  id: number
-  name: string
-  gender: number
-  roles: { character: string; movie_title: string; movie_id: number }[]
-}
 
 export interface MovieStats {
   genderCounts: GenderCount

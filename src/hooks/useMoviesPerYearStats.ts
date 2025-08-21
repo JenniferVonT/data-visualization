@@ -5,7 +5,7 @@
  */
 
 import { computeMoviesPerYear } from '../data/processData'
-import { Movie } from './useMovieStats.ts'
+import { Movie } from '../api/client.ts'
 
 /**
  * Process the data to calculate movies released per year.
