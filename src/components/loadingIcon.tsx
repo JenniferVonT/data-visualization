@@ -17,7 +17,7 @@ export function LoadingIcon () {
       height: '100vh'
     }}>
       <img 
-        src= '../loadingGif.svg'
+        src= '../public/loadingGif.svg'
         alt="Loading..." 
         style={{ width: 80, height: 80 }}
       />

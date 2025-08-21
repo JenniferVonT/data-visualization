@@ -8,7 +8,7 @@ import React, { useState } from'react'
 import { PieChart, Pie, Cell, Tooltip, Legend, Sector, PieProps } from 'recharts'
 import { GenderCount } from '../hooks/useMovieStats.ts'
 
-const COLORS = ['#8cc9f1ff', '#ffc2edff', '#b4ffbeff'] // colors for male, female, unknown
+const COLORS = ['#8cc9f1ff', '#ffc2edff', '#2d8b49ff'] // colors for male, female, unknown
 
 interface GenderChartProps {
   genderCounts: GenderCount

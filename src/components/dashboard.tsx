@@ -33,20 +33,33 @@ export default function Dashboard() {
   return (
     <div>
       <div id="genderChart">
-        <DropDownGenre
-          genres={data.genres}
-          selectedGenre={genderGenre}
-          onChange={setGenderGenre}
-        />
+        <h3>Gender diversity in movies</h3>
+
+        <div>
+          <p>View by genre:</p>
+          <DropDownGenre
+            genres={data.genres}
+            selectedGenre={genderGenre}
+            onChange={setGenderGenre}
+          />
+        </div>
+
         <GenderChart genderCounts={genderCounts} />
       </div>
 
+      <hr></hr>
+
       <div id="yearChart">
-        <DropDownGenre
-          genres={data.genres}
-          selectedGenre={yearGenre}
-          onChange={setYearGenre}
-        />
+        <h3>How many movies were released each year</h3>
+
+        <div>
+          <p>View by genre:</p>
+            <DropDownGenre
+              genres={data.genres}
+              selectedGenre={yearGenre}
+              onChange={setYearGenre}
+            />
+          </div>
         <YearChart moviesPerYear={moviesPerYear} />
       </div>
     </div>

@@ -1,0 +1,53 @@
+html {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color:#020202;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #2d8b49ff;
+    height: min-content;
+    box-shadow: 0px 0px 15px 0px #020202;
+    margin-bottom: 50px;
+}
+
+#root {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#genderChart, #yearChart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:flex-end;
+    background-color: #00330f;
+    height: 150px;
+    color: #b6b6b6;
+    box-shadow: 0px 0px 15px 0px #020202;
+    margin-top: 50px;
+}
+
+footer a {
+    color: #b6b6b6;
+}
